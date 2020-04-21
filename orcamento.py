@@ -19,7 +19,7 @@ def recebeEntrada(string1, string2):
 
 	inputString = '0'
 	while inputString != 's' and inputString != 'n':
-		inputString = (input(string1))
+		inputString = input(string1)
 		if inputString == 's':
 			custoString = validaEntrada(string2)
 		elif inputString == 'n':
@@ -33,11 +33,11 @@ def main():
 
 	inputConfig = '0'
 	while inputConfig != 's' and inputConfig != 'n':
-		inputConfig = input("Usar as configurações de equipamento, investimento e despesas com ferramentas de edição salvas?(s/n) ")
+		inputConfig = input("Usar as configurações de equipamento, investimento e despesas com ferramentas de edição salvas?(s/n) ") #configurações específicas desse cliente no futuro criar um bd
 		if inputConfig == 's':
 			custoMaterial = 9700
-			investimentoProfissional = 200
-			outrasDespesas = 100
+			investimentoProfissional = 250
+			outrasDespesas = 40 #gasto mensal com assinatura do photoshop e lightroom.
 			custoMarketing = 0
 		elif inputConfig == 'n':
 			custoMaterial = validaEntrada("Qual o valor aproximado do seu equipamento?(Camêras, Lentes, Flashes, Tripés, etc): ")
@@ -58,6 +58,7 @@ def main():
 
 	mediaTrabalhosMes = validaEntrada("Quantos trabalhos em média você prevê realizar esse mês? ")
 	
+	#evita que o custo de manutenção do equipamento seja muito diluído ou seja um valor inválido.
 	if mediaTrabalhosMes < 1:
 		mediaTrabalhosMes = 1
 	elif mediaTrabalhosMes > 10:
@@ -65,16 +66,19 @@ def main():
 
 	horaTrabalho = validaEntrada("Qual o valor da sua hora de trabalho? ")
 	nHoras = validaEntrada("Serão quantas horas de trabalho? ")
-	nHoras *= 4
+	nHoras *= 4 #cliente gasta em média 3h editando 1h de fotos.
 
 	custoDeslocamento = recebeEntrada("Terá custo de deslocamento para o local ou aluguel de estúdio?(s/n) ", "Qual a sua despesa total com deslocamento ou aluguel do estúdio? ")
 	outrasDespesas = recebeEntrada("Possui alguma outra despesa não descrita acima?(s/n) ", "Qual o valor? ")
 
 	orcamento = (custoMaterial/36) + (investimentoProfissional/mediaTrabalhosMes) + (custoMarketing/mediaTrabalhosMes) + (outrasDespesas/mediaTrabalhosMes)
-	#orcamento = orcamento + (custoFuncionarios/mediaTrabalhosMes) + (custoAluguel/mediaTrabalhosMes) + (despesasMensais/mediaTrabalhosMes)
+	'''
+	#temporariamente desabilitado por falta de uso.
+	orcamento = orcamento + (custoFuncionarios/mediaTrabalhosMes) + (custoAluguel/mediaTrabalhosMes) + (despesasMensais/mediaTrabalhosMes)
+	'''
 	orcamento = ((orcamento/20) + horaTrabalho)*nHoras + custoDeslocamento
 
-	print("O valor sugerido para este trabaho é de R$:%.2f" % orcamento)
-	os.system("PAUSE")
+	print(f"O valor sugerido para este trabaho é de R$ {orcamento:.2f}")
+	os.system("PAUSE") #evita que o cmd feche após exibir o resultado.
 	
 main()
