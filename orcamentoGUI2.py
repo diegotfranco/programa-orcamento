@@ -8,32 +8,41 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+#from PyQt5.QtWidgets import QMessageBox
 
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(911, 650)
+        MainWindow.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+
         MainWindow.setCentralWidget(self.centralwidget)
+
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 911, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
         self.menubar.setObjectName("menubar")
         self.menuOrcamento = QtWidgets.QMenu(self.menubar)
         self.menuOrcamento.setObjectName("menuOrcamento")
         self.menuSobre = QtWidgets.QMenu(self.menubar)
         self.menuSobre.setObjectName("menuSobre")
+
         MainWindow.setMenuBar(self.menubar)
+
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
+
         MainWindow.setStatusBar(self.statusbar)
+
         self.actionNovo = QtWidgets.QAction(MainWindow)
         self.actionNovo.setObjectName("actionNovo")
         self.actionSalvar = QtWidgets.QAction(MainWindow)
         self.actionSalvar.setObjectName("actionSalvar")
         self.actionImprimir = QtWidgets.QAction(MainWindow)
         self.actionImprimir.setObjectName("actionImprimir")
+
         self.menuOrcamento.addAction(self.actionNovo)
         self.menuOrcamento.addAction(self.actionSalvar)
         self.menuOrcamento.addAction(self.actionImprimir)
@@ -42,6 +51,10 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+        self.actionNovo.triggered.connect(lambda: self.show_popup("ATIVEI O NOVO"))
+        self.actionSalvar.triggered.connect(lambda: self.show_popup("ATIVEI O SALVAR"))
+        self.actionImprimir.triggered.connect(lambda: self.show_popup("ATIVEI O IMPRIMIR"))
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -55,10 +68,19 @@ class Ui_MainWindow(object):
         self.actionSalvar.setStatusTip(_translate("MainWindow", "Salva o orçamento"))
         self.actionSalvar.setShortcut(_translate("MainWindow", "Ctrl+B"))
         self.actionImprimir.setText(_translate("MainWindow", "Imprimir"))
+        self.actionImprimir.setStatusTip(_translate("MainWindow", "Imprime o orçamento"))
         self.actionImprimir.setShortcut(_translate("MainWindow", "Ctrl+P"))
 
+    def show_popup(self, text):
+        msg = QtWidgets.QMessageBox()
+        msg.setWindowTitle("Testando os atalhos")
+        msg.setText(text)
+        msg.setIcon(QtWidgets.QMessageBox.Information)
+        
+        x = msg.exec_()
 
 if __name__ == "__main__":
+    
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
